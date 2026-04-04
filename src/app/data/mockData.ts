@@ -1,10 +1,10 @@
 import { Course, CrewMeeting, RunRecord, UserProfile } from '../types';
 
-import courseImage1 from 'figma:asset/41ae73e72cf52e658eff6c64e18ff2ac26bbc20d.png';
-import courseImage2 from 'figma:asset/067b4dccecc5149c10d871401a8a996e1831daff.png';
-import courseImage3 from 'figma:asset/5cae17d1a47d9d935713a73997d8d1514bcca94c.png';
-import courseImage4 from 'figma:asset/97723fe2d5edb32691e179f6b715b1a7fbd271e8.png';
-import courseImage5 from 'figma:asset/f85e27d4e0b23e9c43fcb0cec21a0602a1765f79.png';
+import courseImage1 from '../../assets/41ae73e72cf52e658eff6c64e18ff2ac26bbc20d.png';
+import courseImage2 from '../../assets/067b4dccecc5149c10d871401a8a996e1831daff.png';
+import courseImage3 from '../../assets/5cae17d1a47d9d935713a73997d8d1514bcca94c.png';
+import courseImage4 from '../../assets/97723fe2d5edb32691e179f6b715b1a7fbd271e8.png';
+import courseImage5 from '../../assets/f85e27d4e0b23e9c43fcb0cec21a0602a1765f79.png';
 
 export const mockCourses: Course[] = [
   {
