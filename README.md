@@ -1,15 +1,6 @@
-
-  # Running Travel Platform
-
-  This is a code bundle for Running Travel Platform. The original project is available at https://www.figma.com/design/xZDviDuaMGrRjjKoxTLQKs/Running-Travel-Platform.
-
-  ## Running the code
-
-  Run `npm i` to install the dependencies.
-
-  Run `npm run dev` to start the development server.
-  
 # INHA_DB_RunningPlatform
+
+러닝 여행 플랫폼 팀 프로젝트 저장소입니다.
 
 # 🏃 우리가 이 서비스를 만드는 이유
 
@@ -56,3 +47,15 @@
 
 3km든 10km든, 빠르게 뛰든 느리게 뛰든 전혀 상관없다. 기록 경쟁도 필요 없다. **일단 밖으로 나가서 달리는 것.** 그 자체가 목적이다. 러닝이라는 운동에 재미 요소를 더해서, 한 번으로 끝나는 게 아니라 지속 가능한 운동 습관으로 이어지게 만드는 것, 그게 우리가 이 서비스를 만드는 이유다.
 
+## 저장소 구조
+
+- `frontend/`: Vite 기반 프론트엔드 애플리케이션
+- `backend/`: 추후 추가 예정인 백엔드 애플리케이션
+
+## 프론트엔드 실행 방법
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
