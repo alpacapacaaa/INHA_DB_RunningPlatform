@@ -7,6 +7,8 @@
 - [개발 환경 설정](./docs/DEVELOPMENT.md)
 - [커밋 컨벤션](./docs/COMMIT_CONVENTION.md)
 - [PR 규칙](./docs/PULL_REQUEST_RULE.md)
+- [네이밍 규칙](./docs/NAMING_CONVENTION.md)
+- [EC2/Docker 배포 준비](./docs/DEPLOYMENT.md)
 - [협업 가이드](./CONTRIBUTING.md)
 
 # 🏃 우리가 이 서비스를 만드는 이유

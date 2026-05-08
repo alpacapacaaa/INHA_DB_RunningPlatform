@@ -20,10 +20,20 @@ docs: 개발 환경 설정 문서 추가
 - UI 변경 시 스크린샷
 - 백엔드 API 변경 시 요청/응답 예시
 
+## 리뷰어 규칙
+
+- PR을 올릴 때 상대 팀원 2명을 리뷰어로 지정합니다.
+- 리뷰어 2명의 확인이 끝나기 전에는 머지하지 않습니다.
+- 본인이 올린 PR은 본인이 직접 머지하지 않습니다.
+- 급한 수정이라도 최소 1명 이상에게 상황을 공유한 뒤 진행합니다.
+
 ## 머지 전 체크리스트
 
 - 내 작업과 관련 없는 파일이 섞이지 않았는지 확인합니다.
 - 충돌이 없는지 확인합니다.
+- 커밋 컨벤션을 지켰는지 확인합니다.
+- 상대 팀원 2명을 리뷰어로 지정했는지 확인합니다.
+- 본인이 직접 머지하지 않는지 확인합니다.
 - 모바일 작업은 `npm run typecheck`, `npm run lint`를 실행합니다.
 - 백엔드 작업은 `./gradlew test`를 실행합니다.
 - UI 변경이 있으면 실제 기기 또는 Expo Go에서 확인합니다.
@@ -44,3 +54,14 @@ docs: 개발 환경 설정 문서 추가
 팀 프로젝트에서는 커밋 기록을 깔끔하게 유지하기 위해 `Squash and merge`를 권장합니다.
 
 단, 여러 커밋의 흐름이 의미 있을 때는 팀원과 상의 후 일반 merge를 사용할 수 있습니다.
+
+## GitHub 설정 권장
+
+원본 저장소 관리자는 `main` 브랜치 보호 규칙을 설정하는 것을 권장합니다.
+
+- `Require a pull request before merging` 활성화
+- `Required approvals`를 `2`로 설정
+- `Dismiss stale pull request approvals when new commits are pushed` 활성화
+- `Require status checks to pass before merging` 활성화
+- CI 항목으로 `Mobile`, `Backend` 체크 지정
+- `Do not allow bypassing the above settings` 활성화
