@@ -49,17 +49,134 @@
 
 ## 저장소 구조
 
-- `frontend/`: Vite 기반 프론트엔드 애플리케이션
+- `mobile/`: Expo 기반 모바일 애플리케이션
+- `frontend/`: Vite 기반 웹 프로토타입
 - `backend/`: 추후 추가 예정인 백엔드 애플리케이션
 
-## 프론트엔드 실행 방법
+## 모바일 앱 실행 방법
+
+### 공통 준비
+
+- Node.js 20 LTS 설치
+- iPhone 또는 Android 실기기에 `Expo Go` 설치
+- 프로젝트 의존성 설치
 
 ```bash
-cd frontend
+cd mobile
 npm install
-npm run dev
 ```
+
+### 기본 실행
+
+```bash
+cd mobile
+npx expo start
+```
+
+터미널에 QR 코드가 뜨면 휴대폰에서 `Expo Go`로 스캔합니다.
+
+접속이 잘 안 되면 터널 모드로 실행합니다.
+
+```bash
+npx expo start --tunnel
+```
+
+## Windows에서 확인하는 방법
+
+### Windows + iPhone
+
+Windows에서는 iOS 시뮬레이터를 실행할 수 없습니다. 대신 iPhone 실기기에서 확인합니다.
+
+```bash
+cd mobile
+npm install
+npx expo start
+```
+
+이후 iPhone에서 `Expo Go` 앱을 열고 QR 코드를 스캔합니다.
+
+같은 와이파이에서 접속이 안 되면 아래 명령어를 사용합니다.
+
+```bash
+npx expo start --tunnel
+```
+
+### Windows + Android 실기기
+
+```bash
+cd mobile
+npm install
+npx expo start
+```
+
+이후 Android 휴대폰에서 `Expo Go` 앱을 열고 QR 코드를 스캔합니다.
+
+접속이 안 되면 터널 모드로 실행합니다.
+
+```bash
+npx expo start --tunnel
+```
+
+### Windows + Android 에뮬레이터
+
+Android Studio와 Android SDK가 설치되어 있어야 합니다.
+
+1. Android Studio에서 에뮬레이터를 실행합니다.
+2. 프로젝트에서 아래 명령어를 실행합니다.
+
+```bash
+cd mobile
+npm install
+npm run android
+```
+
+## macOS에서 확인하는 방법
+
+### macOS + iOS 시뮬레이터
+
+Xcode가 설치되어 있으면 iOS 시뮬레이터로 확인할 수 있습니다.
+
+```bash
+cd mobile
+npm install
+npm run ios
+```
+
+### macOS + iPhone 실기기
+
+```bash
+cd mobile
+npx expo start
+```
+
+iPhone에서 `Expo Go`로 QR 코드를 스캔합니다.
+
+## 백엔드 API 주소 설정
+
+공용 개발 서버를 사용할 때는 `mobile/.env` 파일에 API 주소를 설정합니다.
+
+```env
+EXPO_PUBLIC_API_BASE_URL=http://EC2_PUBLIC_IP:8080
+```
+
+예시:
+
+```env
+EXPO_PUBLIC_API_BASE_URL=http://13.124.123.45:8080
+```
+
+`.env` 파일은 개인 환경 파일이므로 Git에 올리지 않습니다. 대신 팀원들이 참고할 수 있도록 `.env.example`을 따로 두는 것을 권장합니다.
+
+## 자주 헷갈리는 점
+
+- Windows에서는 `npm run ios`를 사용할 수 없습니다.
+- Windows에서도 iPhone 실기기 + Expo Go 조합으로 iOS 화면 확인은 가능합니다.
+- Android는 Windows에서 실기기와 에뮬레이터 모두 확인 가능합니다.
+- QR 접속이 안 되면 `npx expo start --tunnel`을 먼저 시도합니다.
+- 백엔드 연동 시 모바일 앱의 API 주소는 `localhost`가 아니라 EC2 주소나 같은 와이파이의 로컬 IP를 사용해야 합니다.
+
 ### 커밋 컨벤션
+
 | 커밋 타입 | 설명 | 예시 |
 | ------- | ---- | ---- |
 | ✨ **Feat** | 새로운 기능 추가 | `feat: 기능 추가` |
