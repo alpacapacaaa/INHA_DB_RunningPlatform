@@ -12,7 +12,7 @@ interface RunCompleteScreenProps {
   onCreateCourse: () => void;
 }
 
-export default function RunCompleteScreen({ course, record, onBackToRun, onCreateCourse }: RunCompleteScreenProps) {
+export default function RunCompleteScreen({ record, onBackToRun, onCreateCourse }: RunCompleteScreenProps) {
   const shoe = mockShoes[0];
 
   return (
