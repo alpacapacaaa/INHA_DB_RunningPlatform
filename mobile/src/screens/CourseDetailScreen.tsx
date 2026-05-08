@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
   infoLabel: { fontSize: 12, color: colors.subtext, fontWeight: '500' },
   sectionHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 },
   sectionTitle: { fontSize: 18, fontWeight: '600', color: colors.text },
-  sectionCaption: { fontSize: 12, color: colors.subtext },
   scoreList: { borderTopWidth: 1, borderTopColor: colors.line },
   scoreItem: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 14 },
   scoreDivider: { height: 1, backgroundColor: colors.line },

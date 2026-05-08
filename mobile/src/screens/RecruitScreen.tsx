@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
   title: { marginTop: 4, fontSize: 28, fontWeight: '600', color: colors.text },
   rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 12 },
   sectionTitle: { fontSize: 18, fontWeight: '600', color: colors.text },
-  sectionCaption: { marginTop: 4, fontSize: 13, color: colors.subtext },
   livePill: { borderRadius: 999, backgroundColor: colors.primary, paddingHorizontal: 12, paddingVertical: 8 },
   livePillText: { fontSize: 12, fontWeight: '600', color: '#FFFFFF' },
   meetingList: { marginTop: 14, gap: 12 },
