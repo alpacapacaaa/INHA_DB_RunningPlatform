@@ -2,6 +2,13 @@
 
 러닝 여행 플랫폼 팀 프로젝트 저장소입니다.
 
+## 빠른 문서
+
+- [개발 환경 설정](./docs/DEVELOPMENT.md)
+- [커밋 컨벤션](./docs/COMMIT_CONVENTION.md)
+- [PR 규칙](./docs/PULL_REQUEST_RULE.md)
+- [협업 가이드](./CONTRIBUTING.md)
+
 # 🏃 우리가 이 서비스를 만드는 이유
 
 러닝은 다른 운동과 비교했을 때 진입장벽이 압도적으로 낮다. 헬스장을 등록할 필요도 없고, 비싼 장비를 살 필요도 없다. 신발 하나만 있으면 언제 어디서든 바로 시작할 수 있다. 이게 러닝의 가장 큰 매력이다.
@@ -173,16 +180,3 @@ EXPO_PUBLIC_API_BASE_URL=http://13.124.123.45:8080
 - Android는 Windows에서 실기기와 에뮬레이터 모두 확인 가능합니다.
 - QR 접속이 안 되면 `npx expo start --tunnel`을 먼저 시도합니다.
 - 백엔드 연동 시 모바일 앱의 API 주소는 `localhost`가 아니라 EC2 주소나 같은 와이파이의 로컬 IP를 사용해야 합니다.
-
-### 커밋 컨벤션
-
-| 커밋 타입 | 설명 | 예시 |
-| ------- | ---- | ---- |
-| ✨ **Feat** | 새로운 기능 추가 | `feat: 기능 추가` |
-| 🐛 **Fix** | 버그 수정 | `fix: 오류 수정` |
-| 📄 **Docs** | 문서 수정 | `docs: README 파일 수정` |
-| ♻️ **Refactor** | 코드 리팩토링 | `refactor: 함수 구조 개선` |
-| 📦 **Chore** | 빌드 업무 수정, 패키지 매니저 수정 등 production code와 무관한 변경 | `chore: .gitignore 파일 수정` |
-| 💬 **Comment** | 주석 추가 및 변경 | `comment: 함수 설명 주석 추가` |
-| 🔥 **Remove** | 파일 또는 폴더 삭제 | `remove: 불필요한 파일 삭제` |
-| 🚚 **Rename** | 파일 또는 폴더명 수정 | `rename: 폴더명 변경` |

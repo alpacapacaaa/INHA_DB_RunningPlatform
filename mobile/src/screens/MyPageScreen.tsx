@@ -1,10 +1,13 @@
+import type { ComponentProps } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { mockUserProfile } from '../data/mockData';
 import { colors } from '../theme';
 import { formatDistance } from '../lib/format';
 
-const sections = [
+type IoniconName = ComponentProps<typeof Ionicons>['name'];
+
+const sections: Array<{ label: string; value: string; icon: IoniconName | 'shoe-print' }> = [
   { label: '러너 등급', value: '블루 러너', icon: 'sparkles-outline' },
   { label: '러닝 테스트', value: '완료됨', icon: 'timer-outline' },
   { label: '관리자 문의', value: '문의하기', icon: 'help-circle-outline' },
@@ -62,7 +65,7 @@ export default function MyPageScreen() {
                 {section.icon === 'shoe-print' ? (
                   <MaterialCommunityIcons name="shoe-print" size={18} color={colors.text} />
                 ) : (
-                  <Ionicons name={section.icon as any} size={18} color={section.label === '탈퇴' ? colors.danger : colors.text} />
+                  <Ionicons name={section.icon} size={18} color={section.label === '탈퇴' ? colors.danger : colors.text} />
                 )}
               </View>
               <View style={styles.menuText}>
