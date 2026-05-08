@@ -1,15 +1,30 @@
 root = true
 
+# 모든 파일에 공통 적용되는 기본 설정
 [*]
 charset = utf-8
+
+# 줄바꿈 방식 LF 사용 (Unix/macOS 스타일)
 end_of_line = lf
+
+# 파일 마지막에 빈 줄 추가
 insert_final_newline = true
+
+# 들여쓰기는 space 사용
 indent_style = space
+
+# 기본 들여쓰기 크기 2칸
 indent_size = 2
+
+# 줄 끝의 불필요한 공백 제거
 trim_trailing_whitespace = true
 
+# Java 파일 설정
 [*.java]
+# Java는 일반적으로 4칸 들여쓰기 사용
 indent_size = 4
 
+# Markdown 파일 설정
 [*.md]
+# Markdown은 줄 끝 공백이 문법적으로 의미 있을 수 있으므로 제거하지 않음
 trim_trailing_whitespace = false
