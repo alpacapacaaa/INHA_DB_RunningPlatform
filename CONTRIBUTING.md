@@ -10,7 +10,7 @@
 4. 작업 완료 후 원본 저장소의 `main` 브랜치로 PR을 생성합니다.
 5. PR에는 상대 팀원 2명을 리뷰어로 지정합니다.
 6. 본인이 올린 PR을 직접 머지하지 않습니다.
-7. PR 머지 전에는 충돌 해결, 타입 체크, 린트 확인을 완료합니다.
+7. PR 머지 전에는 충돌 해결, 린트, 타입 체크, 테스트 확인을 완료합니다.
 
 ## 2. Fork 적용 방법
 
@@ -117,8 +117,7 @@ PR에는 아래 내용을 포함합니다.
 - 리뷰어 확인이 끝나기 전에는 머지하지 않습니다.
 - 본인이 올린 PR은 본인이 직접 머지하지 않습니다.
 - 내 작업과 관련 없는 파일이 섞이지 않았는지 확인합니다.
-- 모바일 변경 시 `npm run lint`, `npm run typecheck`를 실행합니다.
-- 백엔드 변경 시 `./gradlew test` 또는 `gradlew.bat test`를 실행합니다.
+- 변경 후 루트에서 `npm run check`를 실행합니다.
 
 ## 6. 로컬 개발 환경 설정
 
@@ -164,17 +163,18 @@ gradlew.bat bootRun
 ## 7. 로컬 확인 명령어
 
 ```bash
-cd mobile
 npm run lint
 npm run typecheck
+npm run test
 ```
+
+전체 검증은 아래 명령어 하나로 실행합니다.
 
 ```bash
-cd backend
-./gradlew test
+npm run check
 ```
 
-Windows에서는 `backend/gradlew.bat test`를 사용합니다.
+현재 린트는 모바일 ESLint와 백엔드 Checkstyle을 함께 실행합니다.
 
 `.editorconfig`가 포함되어 있으므로 VS Code 또는 IntelliJ에서 EditorConfig 지원을 켜는 것을 권장합니다.
 

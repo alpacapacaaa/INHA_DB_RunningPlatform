@@ -7,35 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  mobile:
-    name: Mobile
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: mobile/package-lock.json
-
-      - name: Install dependencies
-        working-directory: mobile
-        run: npm ci
-
-      - name: Typecheck
-        working-directory: mobile
-        run: npm run typecheck
-
-      - name: Lint
-        working-directory: mobile
-        run: npm run lint
-
-  backend:
-    name: Backend
+  check:
+    name: Check
     runs-on: ubuntu-latest
 
     steps:
@@ -48,6 +21,22 @@ jobs:
           distribution: temurin
           java-version: 21
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install dependencies
+        working-directory: mobile
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Test
-        working-directory: backend
-        run: ./gradlew test
+        run: npm run test

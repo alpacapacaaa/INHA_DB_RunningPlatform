@@ -1,0 +1,12 @@
+{
+  "name": "shape-run",
+  "private": true,
+  "scripts": {
+    "lint": "npm run lint:mobile && npm run lint:backend",
+    "lint:mobile": "npm --prefix mobile run lint",
+    "lint:backend": "node scripts/run-gradle.mjs checkstyleMain checkstyleTest",
+    "typecheck": "npm --prefix mobile run typecheck",
+    "test": "node scripts/run-gradle.mjs test",
+    "check": "npm run lint && npm run typecheck && npm run test"
+  }
+}
