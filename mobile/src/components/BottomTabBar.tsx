@@ -1,50 +1,81 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { colors } from '../theme';
 
-export type TabKey = '코스' | '달리기' | '모집' | '히스토리' | '마이';
+type RouteKey = 'Course' | 'History' | 'Run' | 'Recruit' | 'MyPage';
 
-interface BottomTabBarProps {
-  activeTab: TabKey;
-  onChange: (tab: TabKey) => void;
+const TAB_CONFIG: Record<RouteKey, { label: string; icon: 'map-outline' | 'calendar-outline' | 'people-outline' | 'person-outline' }> = {
+  Course:  { label: '코스',    icon: 'map-outline' },
+  History: { label: '기록',    icon: 'calendar-outline' },
+  Recruit: { label: '모집',    icon: 'people-outline' },
+  MyPage:  { label: '내 정보', icon: 'person-outline' },
+  Run:     { label: '달리기',  icon: 'map-outline' },
+};
+
+const LEFT_ROUTES:  RouteKey[] = ['Course', 'History'];
+const RIGHT_ROUTES: RouteKey[] = ['Recruit', 'MyPage'];
+
+function SideTab({
+  label,
+  icon,
+  active,
+  onPress,
+}: {
+  label: string;
+  icon: 'map-outline' | 'calendar-outline' | 'people-outline' | 'person-outline';
+  active: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <TouchableOpacity style={styles.item} activeOpacity={0.75} onPress={onPress}>
+      <Ionicons name={icon} size={22} color={active ? colors.text : colors.subtext} />
+      <Text style={[styles.label, active && styles.labelActive]}>{label}</Text>
+    </TouchableOpacity>
+  );
 }
 
-const tabs: { key: TabKey; label: string; icon: 'map' | 'footsteps' | 'chat' | 'time' | 'person' }[] = [
-  { key: '코스', label: '코스', icon: 'map' },
-  { key: '달리기', label: '달리기', icon: 'footsteps' },
-  { key: '모집', label: '모집', icon: 'chat' },
-  { key: '히스토리', label: '히스토리', icon: 'time' },
-  { key: '마이', label: '마이', icon: 'person' },
-];
+export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
+  const activeRoute = state.routes[state.index].name as RouteKey;
 
-function renderIcon(icon: 'map' | 'footsteps' | 'chat' | 'time' | 'person', active: boolean) {
-  const color = active ? '#FFFFFF' : colors.subtext;
+  const navigate = (route: RouteKey) => {
+    navigation.navigate(route);
+  };
 
-  switch (icon) {
-    case 'map':
-      return <Ionicons name="map-outline" size={21} color={color} />;
-    case 'footsteps':
-      return <MaterialCommunityIcons name="shoe-print" size={21} color={color} />;
-    case 'chat':
-      return <Ionicons name="chatbubble-ellipses-outline" size={21} color={color} />;
-    case 'time':
-      return <Ionicons name="time-outline" size={21} color={color} />;
-    case 'person':
-      return <Ionicons name="person-outline" size={21} color={color} />;
-  }
-}
-
-export default function BottomTabBar({ activeTab, onChange }: BottomTabBarProps) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        {tabs.map((tab) => {
-          const active = activeTab === tab.key;
+        {LEFT_ROUTES.map((route) => {
+          const cfg = TAB_CONFIG[route];
           return (
-            <TouchableOpacity key={tab.key} style={styles.item} activeOpacity={0.9} onPress={() => onChange(tab.key)}>
-              <View style={[styles.iconWrap, active && styles.iconWrapActive]}>{renderIcon(tab.icon, active)}</View>
-              <Text style={[styles.label, active && styles.labelActive]}>{tab.label}</Text>
-            </TouchableOpacity>
+            <SideTab
+              key={route}
+              label={cfg.label}
+              icon={cfg.icon}
+              active={activeRoute === route}
+              onPress={() => navigate(route)}
+            />
+          );
+        })}
+
+        <TouchableOpacity
+          style={[styles.fab, activeRoute === 'Run' && styles.fabActive]}
+          activeOpacity={0.85}
+          onPress={() => navigate('Run')}
+        >
+          <MaterialCommunityIcons name="shoe-print" size={24} color={colors.card} />
+        </TouchableOpacity>
+
+        {RIGHT_ROUTES.map((route) => {
+          const cfg = TAB_CONFIG[route];
+          return (
+            <SideTab
+              key={route}
+              label={cfg.label}
+              icon={cfg.icon}
+              active={activeRoute === route}
+              onPress={() => navigate(route)}
+            />
           );
         })}
       </View>
@@ -54,48 +85,49 @@ export default function BottomTabBar({ activeTab, onChange }: BottomTabBarProps)
 
 const styles = StyleSheet.create({
   wrapper: {
-    position: 'absolute',
-    left: 16,
-    right: 16,
-    bottom: 14,
+    backgroundColor: colors.card,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.line,
   },
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 6,
-    paddingVertical: 8,
-    borderRadius: 22,
-    backgroundColor: 'rgba(255,255,255,0.98)',
-    borderWidth: 1,
-    borderColor: '#ECEDEA',
-    shadowColor: '#0F172A',
-    shadowOpacity: 0.045,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
+    paddingTop: 10,
+    paddingBottom: 28,
+    paddingHorizontal: 8,
   },
   item: {
     flex: 1,
     alignItems: 'center',
     gap: 4,
-  },
-  iconWrap: {
-    width: 36,
-    height: 36,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconWrapActive: {
-    backgroundColor: colors.primary,
+    paddingVertical: 4,
   },
   label: {
-    fontSize: 10.5,
+    fontSize: 10,
     fontWeight: '500',
     color: colors.subtext,
   },
   labelActive: {
     color: colors.text,
+    fontWeight: '600',
+  },
+  fab: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -22,
+    marginHorizontal: 6,
+    shadowColor: colors.shadow,
+    shadowOpacity: 0.22,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 8,
+  },
+  fabActive: {
+    backgroundColor: colors.accentDeep,
   },
 });

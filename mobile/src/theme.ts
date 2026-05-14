@@ -1,21 +1,20 @@
 export const colors = {
-  background: '#F8F8F6',
+  background: '#F2F2F7',
   card: '#FFFFFF',
-  mutedCard: '#F1F2F0',
-  text: '#111111',
-  subtext: '#777C84',
-  line: '#E4E6E3',
-  primary: '#111111',
-  accent: '#2457F5',
-  green: '#1FA968',
-  orange: '#F97316',
-  danger: '#EF4444',
-  softBlue: '#EEF3FF',
-  softOrange: '#FFF6ED',
+  mutedCard: '#F2F2F7',
+  text: '#000000',
+  subtext: '#8E8E93',
+  line: '#E5E5EA',
+  primary: '#000000',
+  accent: '#34C759',
+  accentDeep: '#248A3D',
+  danger: '#FF3B30',
+  shadow: '#000000',
+  softWarn: '#FFF4ED',
 };
 
 export const radii = {
   xl: 24,
-  card: 20,
+  card: 16,
   pill: 999,
 };
