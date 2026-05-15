@@ -14,12 +14,14 @@ export default function SectionCard({ children, style }: SectionCardProps) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.card,
-    borderRadius: 22,
+    borderRadius: 20,
     padding: 16,
-    shadowColor: '#0F172A',
-    shadowOpacity: 0.025,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 1,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.line,
+    shadowColor: colors.shadow,
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 2,
   },
 });
