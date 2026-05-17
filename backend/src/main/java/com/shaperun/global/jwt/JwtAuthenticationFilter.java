@@ -41,10 +41,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(token)) {
             try {
                 Claims claims = jwtTokenProvider.parseClaims(token);
-                String userId = claims.getSubject();
+                String email = claims.getSubject();
 
                 // 로그아웃 여부 확인: 토큰 발급 시각이 마지막 로그아웃 시각보다 이전이면 무효
-                Optional<User> user = userRepository.findById(userId);
+                Optional<User> user = userRepository.findByEmail(email);
                 if (user.isPresent() && user.get().getLastLogoutAt() != null) {
                     LocalDateTime issuedAt = claims.getIssuedAt()
                             .toInstant()
@@ -59,7 +59,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // 토큰이 유효하다 => SecurityContext에 인증 정보 저장
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                userId,
+                                email,
                                 null,
                                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
                         );

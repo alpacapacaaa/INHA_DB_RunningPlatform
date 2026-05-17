@@ -1,15 +1,15 @@
 package com.shaperun.domain.user.entity;
 
-import com.shaperun.domain.user.enums.UserGender;
-import com.shaperun.domain.user.enums.UserRole;
+import com.shaperun.domain.user.enums.RunLevel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,74 +22,54 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @Column(name = "user_id", length = 20)
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long userId;
 
-    @Column(name = "user_name", length = 10, nullable = false)
+    @Column(name = "user_name", length = 20, nullable = false)
     private String userName;
 
-    @Column(name = "user_password", nullable = false)
-    private String password;
-
-    @Column(name = "user_birth_date", nullable = false)
-    private LocalDate birthDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_gender", nullable = false)
-    private UserGender gender;
-
-    @Column(name = "user_email", length = 255, nullable = false, unique = true)
+    @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role", nullable = false)
-    private UserRole role;
+    @Column(name = "level", length = 20)
+    private RunLevel level;
 
-    @Column(name = "user_level", nullable = false)
-    private Integer level;
-
-    @Column(name = "user_total_distance", nullable = false)
-    private Float totalDistance;
-
-    @Column(name = "user_total_time", nullable = false)
-    private Integer totalTime;
-
-    @Column(name = "user_running_count", nullable = false)
-    private Integer runningCount;
-
-    @Column(name = "user_created_date", nullable = false, updatable = false)
-    private LocalDate createdDate;
+    @Column(name = "level_tested", nullable = false)
+    private boolean levelTested;
 
     @Column(name = "last_logout_at")
     private LocalDateTime lastLogoutAt;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
     @PrePersist
     private void prePersist() {
-        this.createdDate = LocalDate.now();
-        this.role = UserRole.ROLE_USER;
-        this.level = 1;
-        this.totalDistance = 0.0f;
-        this.totalTime = 0;
-        this.runningCount = 0;
+        this.createdAt = LocalDateTime.now();
+        this.levelTested = false;
     }
 
     @Builder
-    public User(String userId, String userName, String password,
-            LocalDate birthDate, UserGender gender, String email) {
-        this.userId = userId;
+    public User(String userName, String email, String password) {
         this.userName = userName;
-        this.password = password;
-        this.birthDate = birthDate;
-        this.gender = gender;
         this.email = email;
+        this.password = password;
     }
 
-    public void updateProfile(String userName, UserGender gender) {
+    public void updateProfile(String userName, String email, String encodedPassword) {
         if (userName != null) {
             this.userName = userName;
         }
-        if (gender != null) {
-            this.gender = gender;
+        if (email != null) {
+            this.email = email;
+        }
+        if (encodedPassword != null) {
+            this.password = encodedPassword;
         }
     }
 
@@ -97,9 +77,8 @@ public class User {
         this.lastLogoutAt = LocalDateTime.now();
     }
 
-    public void updateRunningStats(float distance, int time) {
-        this.totalDistance += distance;
-        this.totalTime += time;
-        this.runningCount += 1;
+    public void updateLevel(RunLevel level) {
+        this.level = level;
+        this.levelTested = true;
     }
 }
