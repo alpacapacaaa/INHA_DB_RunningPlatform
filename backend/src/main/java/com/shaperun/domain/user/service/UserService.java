@@ -8,7 +8,6 @@ import com.shaperun.domain.user.repository.UserRepository;
 import com.shaperun.global.exception.CustomException;
 import com.shaperun.global.exception.ErrorCode;
 import com.shaperun.global.jwt.JwtTokenProvider;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,56 +22,61 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    // 회원가입
     @Transactional
     public void signup(UserRequestDto.SignupRequest req) {
-        if (userRepository.existsByUserId(req.getUserId())) {
-            throw new CustomException(ErrorCode.USER_ID_DUPLICATE);
-        }
         if (userRepository.existsByEmail(req.getEmail())) {
             throw new CustomException(ErrorCode.EMAIL_DUPLICATE);
         }
         userRepository.save(UserConverter.toUser(req, passwordEncoder.encode(req.getPassword())));
     }
 
-    // 로그인
     @Transactional
     public UserResponseDto.SigninResponse signin(UserRequestDto.SigninRequest req) {
-        User user = userRepository.findById(req.getUserId())
+        User user = userRepository.findByEmail(req.getEmail())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         if (!passwordEncoder.matches(req.getPassword(), user.getPassword())) {
             throw new CustomException(ErrorCode.INVALID_PASSWORD);
         }
-        return UserConverter.toSigninResponse(user, jwtTokenProvider.generateToken(user.getUserId()));
+        return UserConverter.toSigninResponse(user, jwtTokenProvider.generateToken(user.getEmail()));
     }
 
-    // 로그아웃
     @Transactional
-    public void signout(String userId) {
-        User user = userRepository.findById(userId)
+    public void signout(String email) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         user.logout();
     }
 
-    // 마이페이지 조회
-    public UserResponseDto.ProfileResponse getProfile(String userId) {
-        User user = userRepository.findById(userId)
+    public UserResponseDto.ProfileResponse getProfile(String email) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-        return UserConverter.toProfileResponse(user, List.of());
+        return UserConverter.toProfileResponse(user);
     }
 
-    // 마이페이지 수정
     @Transactional
-    public void updateProfile(String userId, UserRequestDto.UpdateProfileRequest req) {
-        User user = userRepository.findById(userId)
+    public void updateProfile(String email, UserRequestDto.UpdateProfileRequest req) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-        user.updateProfile(req.getUserName(), req.getGender());
+        if (req.getEmail() != null && !req.getEmail().equals(email)) {
+            if (userRepository.existsByEmail(req.getEmail())) {
+                throw new CustomException(ErrorCode.EMAIL_DUPLICATE);
+            }
+        }
+        String encodedPassword = req.getPassword() != null
+                ? passwordEncoder.encode(req.getPassword()) : null;
+        user.updateProfile(req.getUserName(), req.getEmail(), encodedPassword);
     }
 
-    // 계정 삭제
     @Transactional
-    public void deleteAccount(String userId) {
-        User user = userRepository.findById(userId)
+    public void updateLevel(String email, UserRequestDto.UpdateLevelRequest req) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        user.updateLevel(req.getLevel());
+    }
+
+    @Transactional
+    public void deleteAccount(String email) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         userRepository.delete(user);
     }

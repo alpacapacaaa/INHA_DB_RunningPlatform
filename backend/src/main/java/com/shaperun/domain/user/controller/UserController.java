@@ -23,48 +23,49 @@ public class UserController {
 
     private final UserService userService;
 
-    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<Void>> signup(@RequestBody @Valid UserRequestDto.SignupRequest req) {
         userService.signup(req);
         return ResponseEntity.ok(ApiResponse.success("회원가입이 완료되었습니다."));
     }
 
-    // 로그인
     @PostMapping("/signin")
     public ResponseEntity<ApiResponse<UserResponseDto.SigninResponse>> signin(
             @RequestBody @Valid UserRequestDto.SigninRequest req) {
         return ResponseEntity.ok(ApiResponse.success("로그인이 완료되었습니다.", userService.signin(req)));
     }
 
-    // 로그아웃
     @PostMapping("/signout")
     public ResponseEntity<ApiResponse<Void>> signout() {
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        userService.signout(userId);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.signout(email);
         return ResponseEntity.ok(ApiResponse.success("로그아웃이 완료되었습니다."));
     }
 
-    // 마이페이지 조회
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserResponseDto.ProfileResponse>> getProfile() {
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(ApiResponse.success("프로필 조회가 완료되었습니다.", userService.getProfile(userId)));
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ResponseEntity.ok(ApiResponse.success("프로필 조회가 완료되었습니다.", userService.getProfile(email)));
     }
 
-    // 마이페이지 수정
     @PatchMapping("/me")
     public ResponseEntity<ApiResponse<Void>> updateProfile(@RequestBody UserRequestDto.UpdateProfileRequest req) {
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        userService.updateProfile(userId, req);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.updateProfile(email, req);
         return ResponseEntity.ok(ApiResponse.success("프로필이 수정되었습니다."));
     }
 
-    // 회원 탈퇴
+    @PatchMapping("/me/level")
+    public ResponseEntity<ApiResponse<Void>> updateLevel(@RequestBody @Valid UserRequestDto.UpdateLevelRequest req) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.updateLevel(email, req);
+        return ResponseEntity.ok(ApiResponse.success("레벨이 업데이트되었습니다."));
+    }
+
     @DeleteMapping("/me")
     public ResponseEntity<ApiResponse<Void>> deleteAccount() {
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        userService.deleteAccount(userId);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.deleteAccount(email);
         return ResponseEntity.ok(ApiResponse.success("회원탈퇴가 완료되었습니다."));
     }
 }
