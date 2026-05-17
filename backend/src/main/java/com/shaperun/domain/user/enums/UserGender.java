@@ -1,6 +1,5 @@
 package com.shaperun.domain.user.enums;
 
-public enum UserRole {
-    ROLE_USER
+public enum UserGender {
+    MALE, FEMALE
 }
-
